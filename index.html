@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0756a4">
+  <title>Santhi Nursing Home | Cashless Insurance Request</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container py-3 d-flex align-items-center gap-3">
+      <div class="brand-mark"><img src="assets/santhi-hospital-logo.png" alt="Santhi Nursing Home logo"></div>
+      <div>
+        <div class="brand-title">SANTHI NURSING HOME</div>
+        <div class="brand-subtitle">Cashless Insurance Team</div>
+      </div>
+    </div>
+  </header>
+  <div class="contact-strip" aria-label="Call Santhi Nursing Home">
+    <div class="container contact-strip-inner">
+      <span class="contact-label">Call Santhi Nursing Home:</span>
+      <a href="tel:9207861643" aria-label="Call 9207861643"><span aria-hidden="true">☎</span> 9207861643</a>
+      <a href="tel:8075916160" aria-label="Call 8075916160"><span aria-hidden="true">☎</span> 8075916160</a>
+    </div>
+  </div>
+
+  <main class="container main-wrap">
+    <section class="hero-card mb-4" aria-label="Cashless insurance request">
+      <div class="hero-copy">
+        <span class="eyebrow">SANTHI NURSING HOME · PATIENT SUPPORT</span>
+        <h1>Cashless Insurance Request</h1>
+        <p>Select your insurance company or TPA below to fill in the patient details.</p>
+      </div>
+    </section>
+
+    <section class="provider-section">
+      <div class="section-heading">
+        <div><h2>Choose Insurance Company / TPA</h2><p>Tap a card to open the request form.</p></div>
+        <span id="providerCount" class="provider-count">25 providers</span>
+      </div>
+      <div id="providerGrid" class="row g-3"></div>
+    </section>
+
+    <footer class="text-center py-4 small text-secondary">
+      Santhi Nursing Home · Cashless Insurance Team<br>
+      <span>For assistance, contact the hospital insurance Team.</span>
+    </footer>
+  </main>
+
+  <div class="modal fade" id="requestModal" tabindex="-1" aria-labelledby="requestModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+      <div class="modal-content request-modal">
+        <div class="modal-header">
+          <div class="d-flex align-items-center gap-3">
+            <div class="selected-provider-icon" id="selectedProviderIcon">SNH</div>
+            <div><h2 class="modal-title fs-5" id="requestModalTitle">Cashless Request</h2><div class="small text-secondary">Complete all required fields</div></div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="requestForm" novalidate>
+          <div class="modal-body">
+            <div class="selected-provider-name mb-3" id="selectedProviderName"></div>
+            <div class="row g-3">
+              <div class="col-6 col-md-6">
+                <label class="form-label" for="requestDate">Date</label>
+                <input class="form-control" id="requestDate" name="requestDate" readonly>
+              </div>
+              <div class="col-6 col-md-6">
+                <label class="form-label" for="requestTime">Time</label>
+                <input class="form-control" id="requestTime" name="requestTime" readonly>
+              </div>
+              <div class="col-12 col-md-8">
+                <label class="form-label" for="patientName">Patient name <span>*</span></label>
+                <input class="form-control" id="patientName" name="patientName" autocomplete="name" required maxlength="100" placeholder="Enter patient's full name">
+                <div class="invalid-feedback">Please enter the patient name.</div>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label" for="age">Age <span>*</span></label>
+                <input class="form-control" id="age" name="age" type="number" min="0" max="120" required placeholder="Age">
+                <div class="invalid-feedback">Enter an age from 0 to 120.</div>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label" for="roomNo">Room No.</label>
+                <input class="form-control" id="roomNo" name="roomNo" type="text" maxlength="30" placeholder="Enter room number">
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="houseName">House name <span>*</span></label>
+                <input class="form-control" id="houseName" name="houseName" required maxlength="120" placeholder="House / building name">
+                <div class="invalid-feedback">Please enter the house name.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="place">Place <span>*</span></label>
+                <input class="form-control" id="place" name="place" required maxlength="100" placeholder="Town / locality">
+                <div class="invalid-feedback">Please enter the place.</div>
+              </div>
+             <!-- <div class="col-12 col-md-6">
+                <label class="form-label" for="district">District <span>*</span></label>
+                <select class="form-select" id="district" name="district" required>
+                  <option value="">Select district</option>
+                  <option>Alappuzha</option><option>Ernakulam</option><option>Idukki</option><option>Kannur</option>
+                  <option>Kasaragod</option><option>Kollam</option><option>Kottayam</option><option>Kozhikode</option>
+                  <option>Malappuram</option><option>Palakkad</option><option>Pathanamthitta</option><option>Thiruvananthapuram</option>
+                  <option>Thrissur</option><option>Wayanad</option>
+                </select>
+                <div class="invalid-feedback">Please select a district.</div>
+              </div>-->
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="doctor">Doctor name <span>*</span></label>
+                <select class="form-select" id="doctor" name="doctor" required>
+                  <option value="">Select doctor</option>
+                  <option>Dr. Rajesh Krishnan</option>
+                  <option>Dr. Shaji PS</option>
+                  <option>Dr. Mukesh</option>
+				  <option>Dr. Sreekala Rajesh</option>
+				  <option>Dr. Muhsin</option>
+                  <option>Other </option>
+                </select>
+                <div class="invalid-feedback">Please select a doctor.</div>
+                <!--<div class="form-text">Update this list in <code>index.html</code> if needed.</div>-->
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="contact">Contact number <span>*</span></label>
+                <input class="form-control" id="contact" name="contact" type="tel" inputmode="tel" autocomplete="tel" required placeholder="10-digit mobile number" maxlength="15">
+                <div class="invalid-feedback">Enter a valid contact number.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="whatsapp">WhatsApp number <span>*</span></label>
+                <input class="form-control" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" required placeholder="WhatsApp mobile number" maxlength="15">
+                <div class="invalid-feedback">Enter a valid WhatsApp number.</div>
+              </div>
+           <div class="col-12">
+                <label class="form-label" for="expiryDate">Insurance expiry date <span>*</span></label>
+                <input class="form-control" id="expiryDate" name="expiryDate" type="date" required>
+                <div class="invalid-feedback">Please select the insurance expiry date.</div>
+              </div>
+            </div>
+        <div class="malayalam-alert mt-4" role="note">
+              <span aria-hidden="true">⚠️</span>
+              <strong>ഇൻഷുറൻസ് കാർഡ്, ആധാർ കാർഡ് കൈവശം വെക്കുക</strong>
+            </div>
+            <p class="privacy-note mt-3 mb-0">Your details will be placed in a WhatsApp message addressed to the hospital Team. Review the message and tap <strong>Send</strong> in WhatsApp to submit it.</p>
+          </div>
+          <div class="modal-footer form-actions">
+            <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-whatsapp"><span aria-hidden="true">↗</span> Submit via WhatsApp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="formToast" class="toast" role="status" aria-live="polite">
+      <div class="toast-header"><strong class="me-auto">Cashless Request</strong><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>
+      <div class="toast-body" id="toastMessage">Please check the form.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+ :root{--navy:#073f7e;--blue:#0868ba;--sky:#eaf6ff;--green:#16a085;--text:#17324d;--muted:#64778b}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f8fc;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.site-header{background:#fff;border-bottom:1px solid #dce9f4;position:sticky;top:0;z-index:10}
+.brand-mark{width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#0877cb,#0fc39b);color:white;font-weight:900;font-size:14px;box-shadow:0 4px 12px #0a67aa2b}
+.brand-title{font-size:clamp(1rem,3vw,1.45rem);font-weight:900;letter-spacing:.025em;color:#064b92;line-height:1.15}
+.brand-subtitle{font-size:.84rem;color:#627b94;margin-top:3px}
+.main-wrap{max-width:1160px}
+.hero-card{background:white;border:1px solid #dbe9f5;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px #17466c0b}
+.poster-img{display:block;width:100%;max-height:600px;object-fit:contain;background:#fff}
+.hero-copy{padding:1.25rem 1.5rem 1.4rem;border-top:1px solid #edf2f7}
+.eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.14em;color:#118aaf}
+.hero-copy h1{font-weight:850;font-size:clamp(1.45rem,4vw,2.25rem);color:var(--navy);margin:.35rem 0}
+.hero-copy p{margin:0;color:#5c7187}
+.instructions{background:#e9f5ff;border:1px solid #cfe8fb;padding:1rem 1.1rem;border-radius:15px}
+.info-icon{flex:0 0 30px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0b6cb5;color:white;font-weight:900}
+.instructions strong{display:block;margin-bottom:.15rem}
+.instructions p{color:#506b84;font-size:.92rem}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.6rem 0 1rem}
+.section-heading h2{font-size:clamp(1.15rem,3vw,1.55rem);font-weight:850;margin:0;color:var(--navy)}
+.section-heading p{margin:.25rem 0 0;color:var(--muted);font-size:.9rem}
+.provider-count{background:#e3f2ff;color:#0756a4;border-radius:999px;padding:.4rem .7rem;font-size:.8rem;font-weight:800;white-space:nowrap}
+.provider-card{height:100%;width:100%;border:1px solid #dce7f1;background:white;border-radius:16px;padding:1rem .75rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.6rem;min-height:142px;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;color:var(--text)}
+.provider-card:hover,.provider-card:focus-visible{transform:translateY(-3px);border-color:#68b9e8;box-shadow:0 8px 24px #0756a414;outline:none}
+.provider-logo{height:52px;width:100%;display:flex;align-items:center;justify-content:center}
+.logo-badge{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:.95rem;color:white;letter-spacing:-.03em;box-shadow:inset 0 0 0 1px #ffffff3b}
+.provider-name{font-size:.87rem;line-height:1.25;font-weight:800}
+.provider-type{font-size:.72rem;color:#6d8297}
+.request-modal{border:0;border-radius:20px;overflow:hidden}
+.modal-header{padding:1rem 1.25rem;background:#f7fbff;border-bottom:1px solid #e5edf4}
+.modal-body{padding:1.25rem}
+.selected-provider-icon{width:48px;height:48px;flex:0 0 48px;border-radius:13px;display:grid;place-items:center;background:#0873bd;color:white;font-size:.8rem;font-weight:900}
+.selected-provider-name{font-weight:800;color:var(--navy);background:#f1f8ff;padding:.65rem .8rem;border-radius:10px}
+.form-label{font-size:.9rem;font-weight:750;margin-bottom:.4rem}
+.form-label span{color:#d02d40}
+.form-control,.form-select{min-height:46px;border-color:#cfdce8;border-radius:10px}
+.form-control:focus,.form-select:focus{border-color:#1788cf;box-shadow:0 0 0 .2rem #1788cf20}
+.form-control[readonly]{background:#f3f6f9;color:#526a80}
+.malayalam-alert{display:flex;align-items:center;gap:.7rem;padding:1rem;border:1px solid #f0d67b;background:#fff8db;border-radius:12px;color:#664b00;line-height:1.5}
+.privacy-note{font-size:.82rem;color:#65788a;line-height:1.5}
+.btn-whatsapp{background:#168c55;color:#fff;border:0;font-weight:800;border-radius:10px;padding:.75rem 1.05rem}
+.btn-whatsapp:hover,.btn-whatsapp:focus{background:#107544;color:#fff}
+footer{line-height:1.7}
+@media(max-width:575.98px){.container{padding-left:14px;padding-right:14px}.brand-mark{width:44px;height:44px}.hero-card{border-radius:16px}.poster-img{max-height:none}.hero-copy{padding:1rem}.section-heading{align-items:flex-start}.provider-card{min-height:128px;padding:.8rem .45rem}.provider-logo{height:46px}.logo-badge{width:46px;height:46px;border-radius:12px;font-size:.82rem}.provider-name{font-size:.78rem}.provider-type{font-size:.68rem}.modal-dialog{margin:.5rem}.modal-body{padding:1rem}.modal-footer{padding:.85rem;gap:.5rem}.modal-footer .btn{flex:1}.request-modal{border-radius:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+
+/* Responsive form visibility fixes */
+html, body { min-height: 100%; }
+body { overflow-x: hidden; }
+.hero-card { margin-top: 1rem; }
+.hero-copy { padding: clamp(1.2rem, 3vw, 2rem); }
+.modal { padding-left: 0 !important; padding-right: 0 !important; }
+.modal-dialog { width: min(100% - 1rem, 900px); max-width: 900px; margin: .5rem auto; }
+.request-modal { display: flex; flex-direction: column; max-height: calc(100dvh - 1rem); }
+.request-modal form { min-height: 0; display: flex; flex-direction: column; flex: 1 1 auto; }
+.request-modal .modal-header { flex: 0 0 auto; }
+.request-modal .modal-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; flex: 1 1 auto; }
+.request-modal .modal-footer { flex: 0 0 auto; position: sticky; bottom: 0; z-index: 2; background: #fff; border-top: 1px solid #e5edf4; box-shadow: 0 -5px 14px #153c5a0a; padding: .85rem 1rem; }
+.form-actions .btn { min-height: 46px; }
+.form-control, .form-select { width: 100%; }
+.provider-card { cursor: pointer; }
+.provider-logo { overflow: hidden; }
+.logo-badge { max-width: 100%; overflow-wrap: anywhere; }
+@media (max-width: 767.98px) {
+  .modal-dialog { width: 100%; max-width: none; height: 100dvh; margin: 0; }
+  .request-modal { height: 100dvh; max-height: 100dvh; border-radius: 0; }
+  .request-modal .modal-header { padding: .8rem 1rem; }
+  .request-modal .modal-body { padding: .9rem 1rem 1rem; }
+  .request-modal .modal-footer { padding: .7rem .85rem calc(.7rem + env(safe-area-inset-bottom)); gap: .6rem; }
+  .form-actions .btn { flex: 1 1 0; white-space: normal; font-size: .9rem; }
+  .selected-provider-icon { width: 42px; height: 42px; flex-basis: 42px; }
+  .modal-title { font-size: 1rem !important; }
+  .privacy-note { font-size: .8rem; }
+}
+@media (max-width: 380px) {
+  .form-actions { flex-direction: column-reverse; align-items: stretch; }
+  .form-actions .btn { width: 100%; flex: 0 0 auto; }
+  .provider-name { font-size: .75rem; }
+}
+
+
+/* Real logo crops supplied from the hospital's insurance poster */
+.brand-mark { overflow: hidden; background: #fff; border: 1px solid #dbe8f2; box-shadow: 0 3px 12px #0a67aa16; }
+.brand-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.provider-logo { width: 100%; height: 66px; padding: 0 .1rem; }
+.provider-logo-image { display: block; width: 100%; height: 100%; object-fit: contain; }
+.provider-card { gap: .45rem; }
+@media (max-width: 575.98px) {
+  .provider-logo { height: 56px; }
+  .brand-mark { width: 46px; height: 46px; flex: 0 0 46px; }
+}
+
+
+/* HD logo assets: crisp rendering on white cards */
+.brand-mark { background: #fff !important; border-color: #e2eaf2; }
+.brand-mark img { object-fit: contain; background: #fff; }
+.provider-logo { background: #fff; border-radius: 8px; }
+.provider-logo-image { object-fit: contain; image-rendering: auto; background: #fff; }
+.provider-card { background: #fff; border-color: #dbe6f0; }
+
+
+/* Click-to-call contact strip */
+.contact-strip { background: #073f7e; color: #fff; }
+.contact-strip-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .55rem 1.1rem; padding-top: .55rem; padding-bottom: .55rem; }
+.contact-label { font-size: .82rem; font-weight: 750; opacity: .95; }
+.contact-strip a { display: inline-flex; align-items: center; gap: .35rem; color: #fff; font-weight: 800; text-decoration: none; padding: .28rem .6rem; border: 1px solid #ffffff55; border-radius: 999px; font-size: .86rem; }
+.contact-strip a:hover, .contact-strip a:focus-visible { background: #ffffff1c; text-decoration: underline; }
+@media(max-width:575.98px) {
+  .contact-strip-inner { gap: .45rem; padding-top: .5rem; padding-bottom: .5rem; }
+  .contact-label { width: 100%; text-align: center; font-size: .78rem; }
+  .contact-strip a { flex: 1 1 auto; justify-content: center; font-size: .82rem; }
+}
