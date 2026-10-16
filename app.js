@@ -53,6 +53,35 @@
     grid.appendChild(col);
   });
 
+  // Live search filters provider cards by company name, TPA name, and abbreviation.
+  const providerSearch = document.getElementById("providerSearch");
+  const clearProviderSearch = document.getElementById("clearProviderSearch");
+  const searchStatus = document.getElementById("searchStatus");
+  const noProvidersFound = document.getElementById("noProvidersFound");
+
+  function filterProviders() {
+    const query = providerSearch.value.trim().toLocaleLowerCase();
+    let visible = 0;
+    grid.querySelectorAll("[data-provider-index]").forEach(button => {
+      const provider = providers[Number(button.dataset.providerIndex)];
+      const searchable = `${provider.name} ${provider.short} ${provider.type}`.toLocaleLowerCase();
+      const matches = !query || searchable.includes(query);
+      button.closest(".col-6").hidden = !matches;
+      if (matches) visible++;
+    });
+    clearProviderSearch.hidden = query.length === 0;
+    searchStatus.textContent = `${visible} ${visible === 1 ? "provider" : "providers"} found`;
+    noProvidersFound.hidden = visible !== 0;
+    document.getElementById("providerCount").textContent = query ? `${visible} found` : `${providers.length} providers`;
+  }
+
+  providerSearch.addEventListener("input", filterProviders);
+  clearProviderSearch.addEventListener("click", () => {
+    providerSearch.value = "";
+    filterProviders();
+    providerSearch.focus();
+  });
+
   function updateDateTime() {
     const now = new Date();
     document.getElementById("requestDate").value = now.toLocaleDateString("en-IN", {day:"2-digit", month:"2-digit", year:"numeric"});

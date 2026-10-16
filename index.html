@@ -31,7 +31,7 @@
       <div class="hero-copy">
         <span class="eyebrow">SANTHI NURSING HOME · PATIENT SUPPORT</span>
         <h1>Cashless Insurance Request</h1>
-        <p>Select your insurance company or TPA below to fill in the patient details.</p>
+        <p>രോഗിയുടെ വിവരങ്ങൾ നൽകുന്നതിനായി താഴെ നിന്ന് നിങ്ങളുടെ ഇൻഷുറൻസ് കമ്പനിയെയോ TPA-യെയോ തിരഞ്ഞെടുക്കുക.</p>
       </div>
     </section>
 
@@ -40,7 +40,21 @@
         <div><h2>Choose Insurance Company / TPA</h2><p>Tap a card to open the request form.</p></div>
         <span id="providerCount" class="provider-count">25 providers</span>
       </div>
+      <div class="provider-search-wrap mb-3">
+        <label class="visually-hidden" for="providerSearch">Search insurance company</label>
+        <div class="provider-search-box">
+          <span class="search-symbol" aria-hidden="true">⌕</span>
+          <input id="providerSearch" class="form-control provider-search" type="search" placeholder="Search insurance company or TPA..." autocomplete="off" aria-controls="providerGrid">
+          <button type="button" id="clearProviderSearch" class="clear-search" aria-label="Clear search" hidden>Clear</button>
+        </div>
+        <div id="searchStatus" class="search-status" aria-live="polite">25 providers available</div>
+      </div>
       <div id="providerGrid" class="row g-3"></div>
+      <div id="noProvidersFound" class="no-providers-found" hidden>
+        <div class="no-results-icon" aria-hidden="true">⌕</div>
+        <strong>No insurance company found</strong>
+        <p>Try another company name or abbreviation.</p>
+      </div>
     </section>
 
     <footer class="text-center py-4 small text-secondary">
@@ -95,7 +109,7 @@
                 <input class="form-control" id="place" name="place" required maxlength="100" placeholder="Town / locality">
                 <div class="invalid-feedback">Please enter the place.</div>
               </div>
-             <!-- <div class="col-12 col-md-6">
+              <div class="col-12 col-md-6">
                 <label class="form-label" for="district">District <span>*</span></label>
                 <select class="form-select" id="district" name="district" required>
                   <option value="">Select district</option>
@@ -105,20 +119,18 @@
                   <option>Thrissur</option><option>Wayanad</option>
                 </select>
                 <div class="invalid-feedback">Please select a district.</div>
-              </div>-->
+              </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="doctor">Doctor name <span>*</span></label>
                 <select class="form-select" id="doctor" name="doctor" required>
                   <option value="">Select doctor</option>
                   <option>Dr. Rajesh Krishnan</option>
-                  <option>Dr. Shaji PS</option>
-                  <option>Dr. Mukesh</option>
-				  <option>Dr. Sreekala Rajesh</option>
-				  <option>Dr. Muhsin</option>
-                  <option>Other </option>
+                  <option>Dr. Shaji</option>
+                  <option>Dr. Mujesh</option>
+                  <option>Other / Not sure</option>
                 </select>
                 <div class="invalid-feedback">Please select a doctor.</div>
-                <!--<div class="form-text">Update this list in <code>index.html</code> if needed.</div>-->
+                <div class="form-text">Update this list in <code>index.html</code> if needed.</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="contact">Contact number <span>*</span></label>
@@ -130,13 +142,13 @@
                 <input class="form-control" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" required placeholder="WhatsApp mobile number" maxlength="15">
                 <div class="invalid-feedback">Enter a valid WhatsApp number.</div>
               </div>
-           <div class="col-12">
+              <div class="col-12">
                 <label class="form-label" for="expiryDate">Insurance expiry date <span>*</span></label>
                 <input class="form-control" id="expiryDate" name="expiryDate" type="date" required>
                 <div class="invalid-feedback">Please select the insurance expiry date.</div>
               </div>
             </div>
-        <div class="malayalam-alert mt-4" role="note">
+            <div class="malayalam-alert mt-4" role="note">
               <span aria-hidden="true">⚠️</span>
               <strong>ഇൻഷുറൻസ് കാർഡ്, ആധാർ കാർഡ് കൈവശം വെക്കുക</strong>
             </div>

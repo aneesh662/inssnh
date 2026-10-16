@@ -111,3 +111,24 @@ body { overflow-x: hidden; }
   .contact-label { width: 100%; text-align: center; font-size: .78rem; }
   .contact-strip a { flex: 1 1 auto; justify-content: center; font-size: .82rem; }
 }
+
+
+/* Insurance company live search */
+.provider-search-wrap { max-width: 620px; }
+.provider-search-box { display: flex; align-items: center; gap: .55rem; background: #fff; border: 1px solid #cfdce8; border-radius: 13px; padding: .3rem .55rem .3rem .8rem; box-shadow: 0 3px 12px #16466b08; }
+.provider-search-box:focus-within { border-color: #1788cf; box-shadow: 0 0 0 .2rem #1788cf20; }
+.provider-search-box .provider-search { border: 0; box-shadow: none !important; min-height: 42px; padding-left: .15rem; }
+.provider-search-box .provider-search:focus { outline: 0; }
+.search-symbol { color: #0b65a7; font-size: 1.65rem; line-height: 1; }
+.clear-search { border: 0; border-radius: 8px; padding: .35rem .55rem; background: #edf5fb; color: #14527f; font-size: .78rem; font-weight: 750; }
+.search-status { color: #6a7e91; font-size: .78rem; padding: .35rem .2rem 0; }
+.no-providers-found { text-align: center; padding: 2rem 1rem; background: #fff; border: 1px dashed #cbd9e6; border-radius: 15px; color: #405a70; }
+.no-providers-found[hidden] { display: none !important; }
+.no-results-icon { color: #0b65a7; font-size: 2rem; margin-bottom: .25rem; }
+.no-providers-found p { margin: .3rem 0 0; font-size: .88rem; color: #6a7e91; }
+#providerGrid > [hidden] { display: none !important; }
+@media(max-width:575.98px) {
+  .provider-search-wrap { max-width: none; }
+  .provider-search-box { padding-left: .65rem; }
+  .provider-search-box .provider-search { font-size: .9rem; }
+}
