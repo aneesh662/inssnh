@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const WHATSAPP_NUMBER = "919207861643"; // India country code + hospital WhatsApp number
+  const WHATSAPP_NUMBER = "9207861643"; // India country code + hospital WhatsApp number
   const providers = [
     {name:"Tata AIG Insurance", short:"TATA AIG", type:"Insurance", color:"#07549c"},
     {name:"Aditya Birla Health Insurance", short:"ABHI", type:"Health Insurance", color:"#c52e35"},
