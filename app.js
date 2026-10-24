@@ -1,6 +1,8 @@
 (() => {
   "use strict";
-  const WHATSAPP_NUMBER = "918075916160"; // India country code + hospital WhatsApp number
+
+  // WhatsApp recipient in international format: country code + number, digits only.
+  const WHATSAPP_NUMBER = "918075916160";
   const providers = [
     {name:"Tata AIG Insurance", short:"TATA AIG", type:"Insurance", color:"#07549c"},
     {name:"Aditya Birla Health Insurance", short:"ABHI", type:"Health Insurance", color:"#c52e35"},
@@ -28,14 +30,44 @@
     {name:"Magma HDI General Insurance", short:"MAGMA", type:"General Insurance", color:"#b72835"},
     {name:"Zuno General Insurance", short:"ZUNO", type:"General Insurance", color:"#6c28be"}
   ];
-  const grid = document.getElementById("providerGrid");
-  const modalEl = document.getElementById("requestModal");
-  const modal = new bootstrap.Modal(modalEl);
-  const form = document.getElementById("requestForm");
-  const toast = new bootstrap.Toast(document.getElementById("formToast"));
+
+  const byId = id => document.getElementById(id);
+  const grid = byId("providerGrid");
+  const modalEl = byId("requestModal");
+  const form = byId("requestForm");
+  if (!grid || !modalEl || !form) {
+    console.error("Cashless Insurance app could not initialise. Required HTML elements are missing.");
+    return;
+  }
+
+  // Lightweight built-in modal and toast controls: no Bootstrap JavaScript/CDN required.
+  const toastEl = byId("formToast");
+  let toastTimer = null;
+  function showModal() {
+    modalEl.classList.add("show");
+    modalEl.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    const firstInput = modalEl.querySelector("input:not([readonly]), select");
+    if (firstInput) setTimeout(() => firstInput.focus(), 50);
+  }
+  function hideModal() {
+    modalEl.classList.remove("show");
+    modalEl.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+  }
+  function showToast() {
+    if (!toastEl) return;
+    toastEl.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 4500);
+  }
+  modalEl.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => button.addEventListener("click", hideModal));
+  toastEl?.querySelectorAll('[data-bs-dismiss="toast"]').forEach(button => button.addEventListener("click", () => toastEl.classList.remove("show")));
+  modalEl.addEventListener("click", event => { if (event.target === modalEl) hideModal(); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape") hideModal(); });
   let selectedProvider = null;
 
-  const escapeHTML = (value) => String(value).replace(/[&<>"']/g, ch => ({
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({
     "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
   }[ch]));
 
@@ -53,30 +85,29 @@
     grid.appendChild(col);
   });
 
-  // Live search filters provider cards by company name, TPA name, and abbreviation.
-  const providerSearch = document.getElementById("providerSearch");
-  const clearProviderSearch = document.getElementById("clearProviderSearch");
-  const searchStatus = document.getElementById("searchStatus");
-  const noProvidersFound = document.getElementById("noProvidersFound");
+  const providerSearch = byId("providerSearch");
+  const clearProviderSearch = byId("clearProviderSearch");
+  const searchStatus = byId("searchStatus");
+  const noProvidersFound = byId("noProvidersFound");
 
   function filterProviders() {
-    const query = providerSearch.value.trim().toLocaleLowerCase();
+    const query = (providerSearch?.value || "").trim().toLocaleLowerCase();
     let visible = 0;
     grid.querySelectorAll("[data-provider-index]").forEach(button => {
       const provider = providers[Number(button.dataset.providerIndex)];
-      const searchable = ${provider.name} ${provider.short} ${provider.type}.toLocaleLowerCase();
+      const searchable = `${provider.name} ${provider.short} ${provider.type}`.toLocaleLowerCase();
       const matches = !query || searchable.includes(query);
       button.closest(".col-6").hidden = !matches;
       if (matches) visible++;
     });
-    clearProviderSearch.hidden = query.length === 0;
-    searchStatus.textContent = ${visible} ${visible === 1 ? "provider" : "providers"} found;
-    noProvidersFound.hidden = visible !== 0;
-    document.getElementById("providerCount").textContent = query ? ${visible} found : ${providers.length} providers;
+    if (clearProviderSearch) clearProviderSearch.hidden = query.length === 0;
+    if (searchStatus) searchStatus.textContent = `${visible} ${visible === 1 ? "provider" : "providers"} found`;
+    if (noProvidersFound) noProvidersFound.hidden = visible !== 0;
+    if (byId("providerCount")) byId("providerCount").textContent = query ? `${visible} found` : `${providers.length} providers`;
   }
 
-  providerSearch.addEventListener("input", filterProviders);
-  clearProviderSearch.addEventListener("click", () => {
+  providerSearch?.addEventListener("input", filterProviders);
+  clearProviderSearch?.addEventListener("click", () => {
     providerSearch.value = "";
     filterProviders();
     providerSearch.focus();
@@ -84,92 +115,96 @@
 
   function updateDateTime() {
     const now = new Date();
-    document.getElementById("requestDate").value = now.toLocaleDateString("en-IN", {day:"2-digit", month:"2-digit", year:"numeric"});
-    document.getElementById("requestTime").value = now.toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit", hour12:true});
+    byId("requestDate").value = now.toLocaleDateString("en-IN", {day:"2-digit", month:"2-digit", year:"numeric"});
+    byId("requestTime").value = now.toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit", hour12:true});
   }
 
   grid.addEventListener("click", event => {
     const button = event.target.closest("[data-provider-index]");
     if (!button) return;
     selectedProvider = providers[Number(button.dataset.providerIndex)];
-    document.getElementById("selectedProviderName").textContent = selectedProvider.name;
-    document.getElementById("selectedProviderIcon").textContent = selectedProvider.short;
-    document.getElementById("selectedProviderIcon").style.background = selectedProvider.color;
-    document.getElementById("requestModalTitle").textContent = "Cashless Insurance Request";
+    byId("selectedProviderName").textContent = selectedProvider.name;
+    byId("selectedProviderIcon").textContent = selectedProvider.short;
+    byId("selectedProviderIcon").style.background = selectedProvider.color;
+    byId("requestModalTitle").textContent = "Cashless Insurance Request";
     form.reset();
     form.classList.remove("was-validated");
+    ["contact", "whatsapp"].forEach(id => byId(id).setCustomValidity(""));
     updateDateTime();
-    document.getElementById("expiryDate").min = "";
-    modal.show();
+    showModal();
   });
 
   function validPhone(input) {
     const digits = input.value.replace(/\D/g, "");
-    const valid = digits.length >= 10 && digits.length <= 15;
-    input.setCustomValidity(valid ? "" : "Enter a valid phone number");
+    // Accept 10-digit Indian mobile numbers, optionally prefixed by 91 or 0.
+    const normalized = digits.replace(/^91(?=\d{10}$)/, "").replace(/^0(?=\d{10}$)/, "");
+    const valid = /^[6-9]\d{9}$/.test(normalized);
+    input.setCustomValidity(valid ? "" : "Enter a valid 10-digit Indian mobile number");
     return valid;
   }
 
   ["contact", "whatsapp"].forEach(id => {
-    const input = document.getElementById(id);
+    const input = byId(id);
     input.addEventListener("input", () => validPhone(input));
+    input.addEventListener("blur", () => { if (input.value.trim()) validPhone(input); });
   });
 
   form.addEventListener("submit", event => {
     event.preventDefault();
-    const contact = document.getElementById("contact");
-    const whatsapp = document.getElementById("whatsapp");
+    const contact = byId("contact");
+    const whatsapp = byId("whatsapp");
     validPhone(contact);
     validPhone(whatsapp);
     form.classList.add("was-validated");
+
     if (!form.checkValidity() || !selectedProvider) {
       const firstInvalid = form.querySelector(":invalid");
       if (firstInvalid) firstInvalid.focus();
-      document.getElementById("toastMessage").textContent = "Please complete the required fields and check the phone numbers.";
-      toast.show();
+      byId("toastMessage").textContent = "Please complete all required fields and enter valid phone numbers.";
+      showToast();
       return;
     }
 
-    const value = id => document.getElementById(id).value.trim();
+    const value = id => (byId(id)?.value || "").trim();
     const message = [
       "CASHLESS INSURANCE REQUEST",
-      "Santhi Nursing Home | Insurance Team",
+      "Santhi Nursing Home | Cashless Insurance Team",
       "━━━━━━━━━━━━━━━━━━━━━━━━━━",
       "",
       "PATIENT DETAILS",
-      Patient Name: ${value("patientName")},
-      Age: ${value("age")},
-      Room No.: ${value("roomNo") || "Not provided"},
-      House Name: ${value("houseName")},
-      Place: ${value("place")},
-      District: ${value("district")},
+      `Patient Name: ${value("patientName")}`,
+      `Age: ${value("age")}`,
+      `Room No.: ${value("roomNo") || "Not provided"}`,
+      `House Name: ${value("houseName")}`,
+      `Place: ${value("place")}`,
+      `District: ${value("district") || "Not provided"}`,
       "",
       "INSURANCE & MEDICAL DETAILS",
-      Insurance Company / TPA: ${selectedProvider.name},
-      Doctor Name: ${value("doctor")},
-      Insurance Expiry Date: ${value("expiryDate")},
+      `Insurance Company / TPA: ${selectedProvider.name}`,
+      `Doctor Name: ${value("doctor")}`,
       "",
       "CONTACT DETAILS",
-      Contact Number: ${value("contact")},
-      WhatsApp Number: ${value("whatsapp")},
+      `Contact Number: ${value("contact")}`,
+      `WhatsApp Number: ${value("whatsapp")}`,
       "",
       "REQUEST TIMESTAMP",
-      Date: ${value("requestDate")},
-      Time: ${value("requestTime")},
-      "",
-      "Reminder: ഇൻഷുറൻസ് കാർഡ്, ആധാർ കാർഡ് കൈവശം വെക്കുക",
+      `Date: ${value("requestDate")}`,
+      `Time: ${value("requestTime")}`,
       "",
       "Kindly review this request and assist with the cashless insurance process.",
       "Thank you."
     ].join("\n");
 
-    const url = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
-    window.open(url, "_blank", "noopener,noreferrer");
-    document.getElementById("toastMessage").textContent = "WhatsApp opened with your request. Review the details and tap Send to submit to the Insurance Team.";
-    toast.show();
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const opened = window.open(url, "_blank", "noopener,noreferrer");
+    if (!opened) {
+      byId("toastMessage").textContent = "Your browser blocked the WhatsApp window. Allow pop-ups for this site and submit again.";
+    } else {
+      byId("toastMessage").textContent = "WhatsApp opened with the request. Review the details and tap Send to submit it to the Insurance Team.";
+    }
+    showToast();
   });
 
-  // Keep displayed date/time current while the form remains open, but users cannot edit them.
-  modalEl.addEventListener("show.bs.modal", updateDateTime);
-  document.getElementById("providerCount").textContent = ${providers.length} providers;
+  byId("providerCount").textContent = `${providers.length} providers`;
+  filterProviders();
 })();
